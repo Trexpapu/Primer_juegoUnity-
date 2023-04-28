@@ -42,9 +42,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Walk",
+                    "name": "Hide1",
                     "type": "Button",
-                    "id": "bd77775c-198a-4e32-9b15-94c9b938b7fe",
+                    "id": "798ecc29-d480-487e-9add-0cd21722e10c",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -175,23 +175,23 @@
                 },
                 {
                     "name": "",
-                    "id": "797a7817-d5a8-4109-9c76-e372a9a02a1d",
-                    "path": "<Keyboard>/ctrl",
+                    "id": "8170997c-e36c-4706-bd60-1b4224167457",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Walk",
+                    "action": "Hide1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "51fa29b2-54dd-4f30-83f4-b4c944e0c3d5",
-                    "path": "<Gamepad>/buttonNorth",
+                    "id": "b0b40f60-bcf8-40ee-a473-39c4f697df3d",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Walk",
+                    "action": "Hide1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

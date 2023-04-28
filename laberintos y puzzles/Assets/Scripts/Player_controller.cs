@@ -18,7 +18,13 @@ public class Player_controller : MonoBehaviour
     private Transform cameraMain;
     private Transform child;
 
-    private Player_controlls playerInput;
+    private bool hide1Presionado = false;
+    private bool personajeVisible = true;
+
+    private bool correr=false;
+
+
+    public Player_controlls playerInput;
     
     private void Awake()
     {
@@ -37,6 +43,7 @@ public class Player_controller : MonoBehaviour
     {
         cameraMain= Camera.main.transform;
         child= transform.GetChild(0).transform;
+       
     }
 
     void Update()
@@ -54,6 +61,8 @@ public class Player_controller : MonoBehaviour
 
         if( move != Vector3.zero){
             gameObject.transform.forward=move;
+           
+
         }
 
 
@@ -64,12 +73,17 @@ public class Player_controller : MonoBehaviour
         }
 
         //sprint of the player
+      
         if(playerInput.PlayerMain.Sprint.triggered){
-            playerSpeed=8f;
+            if(!correr){
+                playerSpeed=8f;
+                correr=true;
+            }else if(correr){
+                playerSpeed=2f;
+                correr=false;
+            }
         }
-        if(playerInput.PlayerMain.Walk.triggered){
-            playerSpeed=2f;
-        }
+
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
@@ -77,6 +91,45 @@ public class Player_controller : MonoBehaviour
         //    Quaternion rotation = Quaternion.Euler(new Vector3(child.localEulerAngles.x, cameraMain.localEulerAngles.y , child.localEulerAngles.z));
         //    child.rotation= Quaternion.Lerp(child.rotation, rotation, Time.deltaTime * rotationSpeed);
      //   }
+
+
+    //hide player
+
+        GameObject playerObj2= GameObject.Find("BigCloset");
+    
+        Hide hide= playerObj2.GetComponent<Hide>();
+        
+        GameObject playerObj = GameObject.Find("visor");
+            
+        Rayo_lazer rayoLazer = playerObj.GetComponent<Rayo_lazer>();
+
+       
+    if (playerInput.PlayerMain.Hide1.triggered) {
+        if (personajeVisible && rayoLazer.choca && !hide.esconder && !hide1Presionado) {
+            Debug.Log("Presionado1" );
+            hide.esconder = true;
+            hide1Presionado = true;
+            personajeVisible = false;
+             controller.enabled = false;
+        }
+        else if (!personajeVisible && hide.esconder && hide1Presionado) {
+            Debug.Log("Presionado2");
+            hide.presionado = true;
+            hide.esconder = false;
+            hide1Presionado = false;
+            personajeVisible = true;
+            controller.enabled = true;
+        }
+
+      
+    }
+  
+    
+    
+    
+
+   
+
     }
 
     

@@ -64,9 +64,9 @@ public partial class @Player_controlls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Walk"",
+                    ""name"": ""Hide1"",
                     ""type"": ""Button"",
-                    ""id"": ""bd77775c-198a-4e32-9b15-94c9b938b7fe"",
+                    ""id"": ""798ecc29-d480-487e-9add-0cd21722e10c"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -197,23 +197,23 @@ public partial class @Player_controlls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""797a7817-d5a8-4109-9c76-e372a9a02a1d"",
-                    ""path"": ""<Keyboard>/ctrl"",
+                    ""id"": ""8170997c-e36c-4706-bd60-1b4224167457"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Walk"",
+                    ""action"": ""Hide1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""51fa29b2-54dd-4f30-83f4-b4c944e0c3d5"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""id"": ""b0b40f60-bcf8-40ee-a473-39c4f697df3d"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Walk"",
+                    ""action"": ""Hide1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -228,7 +228,7 @@ public partial class @Player_controlls : IInputActionCollection2, IDisposable
         m_PlayerMain_Jump = m_PlayerMain.FindAction("Jump", throwIfNotFound: true);
         m_PlayerMain_Look = m_PlayerMain.FindAction("Look", throwIfNotFound: true);
         m_PlayerMain_Sprint = m_PlayerMain.FindAction("Sprint", throwIfNotFound: true);
-        m_PlayerMain_Walk = m_PlayerMain.FindAction("Walk", throwIfNotFound: true);
+        m_PlayerMain_Hide1 = m_PlayerMain.FindAction("Hide1", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -292,7 +292,7 @@ public partial class @Player_controlls : IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerMain_Jump;
     private readonly InputAction m_PlayerMain_Look;
     private readonly InputAction m_PlayerMain_Sprint;
-    private readonly InputAction m_PlayerMain_Walk;
+    private readonly InputAction m_PlayerMain_Hide1;
     public struct PlayerMainActions
     {
         private @Player_controlls m_Wrapper;
@@ -301,7 +301,7 @@ public partial class @Player_controlls : IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_PlayerMain_Jump;
         public InputAction @Look => m_Wrapper.m_PlayerMain_Look;
         public InputAction @Sprint => m_Wrapper.m_PlayerMain_Sprint;
-        public InputAction @Walk => m_Wrapper.m_PlayerMain_Walk;
+        public InputAction @Hide1 => m_Wrapper.m_PlayerMain_Hide1;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMain; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -323,9 +323,9 @@ public partial class @Player_controlls : IInputActionCollection2, IDisposable
                 @Sprint.started -= m_Wrapper.m_PlayerMainActionsCallbackInterface.OnSprint;
                 @Sprint.performed -= m_Wrapper.m_PlayerMainActionsCallbackInterface.OnSprint;
                 @Sprint.canceled -= m_Wrapper.m_PlayerMainActionsCallbackInterface.OnSprint;
-                @Walk.started -= m_Wrapper.m_PlayerMainActionsCallbackInterface.OnWalk;
-                @Walk.performed -= m_Wrapper.m_PlayerMainActionsCallbackInterface.OnWalk;
-                @Walk.canceled -= m_Wrapper.m_PlayerMainActionsCallbackInterface.OnWalk;
+                @Hide1.started -= m_Wrapper.m_PlayerMainActionsCallbackInterface.OnHide1;
+                @Hide1.performed -= m_Wrapper.m_PlayerMainActionsCallbackInterface.OnHide1;
+                @Hide1.canceled -= m_Wrapper.m_PlayerMainActionsCallbackInterface.OnHide1;
             }
             m_Wrapper.m_PlayerMainActionsCallbackInterface = instance;
             if (instance != null)
@@ -342,9 +342,9 @@ public partial class @Player_controlls : IInputActionCollection2, IDisposable
                 @Sprint.started += instance.OnSprint;
                 @Sprint.performed += instance.OnSprint;
                 @Sprint.canceled += instance.OnSprint;
-                @Walk.started += instance.OnWalk;
-                @Walk.performed += instance.OnWalk;
-                @Walk.canceled += instance.OnWalk;
+                @Hide1.started += instance.OnHide1;
+                @Hide1.performed += instance.OnHide1;
+                @Hide1.canceled += instance.OnHide1;
             }
         }
     }
@@ -355,6 +355,6 @@ public partial class @Player_controlls : IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
-        void OnWalk(InputAction.CallbackContext context);
+        void OnHide1(InputAction.CallbackContext context);
     }
 }

@@ -366,8 +366,10 @@
 "Assets/Joystick Pack/Scripts/Joysticks/FloatingJoystick.cs"
 "Assets/Joystick Pack/Scripts/Joysticks/VariableJoystick.cs"
 "Assets/Scripts/Camera_controller.cs"
+"Assets/Scripts/Hide.cs"
 "Assets/Scripts/Player_controller.cs"
 "Assets/Scripts/Player_controlls.cs"
+"Assets/Scripts/Rayo_lazer.cs"
 -langversion:9.0
 
 /deterministic
