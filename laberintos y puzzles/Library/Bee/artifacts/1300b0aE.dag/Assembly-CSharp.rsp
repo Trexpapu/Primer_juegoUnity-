@@ -370,6 +370,7 @@
 "Assets/Scripts/Player_controller.cs"
 "Assets/Scripts/Player_controlls.cs"
 "Assets/Scripts/Rayo_lazer.cs"
+"Assets/Scripts/Task.cs"
 -langversion:9.0
 
 /deterministic

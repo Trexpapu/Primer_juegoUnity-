@@ -12,6 +12,7 @@ public class Hide : MonoBehaviour
   private GameObject player;
  
   public bool esconder;
+  public bool salio;
   public bool presionado;
   Transform PlayerT;
   
@@ -27,9 +28,9 @@ public class Hide : MonoBehaviour
     
     if(esconder==true){
       Debug.Log("Esconder = true");
-        PlayerT.position= Vector3.Lerp(PlayerT.position, dentro.position, tiempo * Time.deltaTime);
-        PlayerT.rotation=Quaternion.Lerp(PlayerT.rotation, dentro.rotation, tiempo * Time.deltaTime);
-       
+       PlayerT.position= Vector3.Lerp(PlayerT.position, dentro.position, tiempo * Time.deltaTime);
+       PlayerT.rotation=Quaternion.Lerp(PlayerT.rotation, dentro.rotation, tiempo * Time.deltaTime);
+  
         
         
     }
@@ -40,9 +41,12 @@ public class Hide : MonoBehaviour
       Debug.Log("esconder=false");
         PlayerT.position= Vector3.Lerp(PlayerT.position, fuera.position, tiempo * Time.deltaTime);
         PlayerT.rotation=Quaternion.Lerp(PlayerT.rotation, fuera.rotation, tiempo * Time.deltaTime);
+    
         StartCoroutine(finEscondite());
-        presionado=false;
-        esconder=false;
+
+        salio=true;
+        
+        
        
     }
 
@@ -51,5 +55,6 @@ public class Hide : MonoBehaviour
   IEnumerator finEscondite(){
     yield return new WaitForSeconds(2);
     esconder=false;
+    presionado=false;
   }
 }

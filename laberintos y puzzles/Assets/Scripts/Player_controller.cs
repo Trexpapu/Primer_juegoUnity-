@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player_controller : MonoBehaviour
 {
-    private CharacterController controller;
+     CharacterController controller;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     [SerializeField]
@@ -13,10 +13,9 @@ public class Player_controller : MonoBehaviour
     private float jumpHeight = 1.0f;
     [SerializeField]
     private float gravityValue = -9.81f;
-    [SerializeField]
-    //private float rotationSpeed = 4f;
+   
     private Transform cameraMain;
-    private Transform child;
+    
 
     private bool hide1Presionado = false;
     private bool personajeVisible = true;
@@ -25,6 +24,9 @@ public class Player_controller : MonoBehaviour
 
 
     public Player_controlls playerInput;
+
+    private GameObject playerObj3;
+    private Task task;
     
     private void Awake()
     {
@@ -42,7 +44,10 @@ public class Player_controller : MonoBehaviour
     private void Start()
     {
         cameraMain= Camera.main.transform;
-        child= transform.GetChild(0).transform;
+
+        playerObj3=GameObject.Find("cofre");
+        task=playerObj3.GetComponent<Task>();
+       
        
     }
 
@@ -53,24 +58,42 @@ public class Player_controller : MonoBehaviour
         {
             playerVelocity.y = 0f;
         }
-        Vector2 movementInput= playerInput.PlayerMain.Move.ReadValue<Vector2>();
-        
-        Vector3 move = (cameraMain.forward * movementInput.y + cameraMain.right * movementInput.x);
-        movementInput.y=0f;
-        controller.Move(move * Time.deltaTime * playerSpeed);
+      
 
-        if( move != Vector3.zero){
-            gameObject.transform.forward=move;
-           
+        Vector2 movementInput = playerInput.PlayerMain.Move.ReadValue<Vector2>();
 
+        // Calcular la dirección del movimiento en el espacio del mundo
+        Vector3 moveDirection = cameraMain.forward * movementInput.y + cameraMain.right * movementInput.x;
+        moveDirection.y = 0f;
+        moveDirection.Normalize();
+
+        // Rotar el personaje hacia la dirección del movimiento
+        if (moveDirection != Vector3.zero) {
+            gameObject.transform.forward = moveDirection;
+
+            // Alinear el personaje con el suelo
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, Vector3.down, out hit, 1.0f)) {
+                transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
+            }
         }
 
+        // Mover el personaje utilizando el CharacterController
+        controller.Move(moveDirection * Time.deltaTime * playerSpeed);
 
-        // Changes the height position of the player..
-        if (playerInput.PlayerMain.Jump.triggered && groundedPlayer)
+
+
+        // boton para interactuar..
+        if (playerInput.PlayerMain.Interactuar.triggered)
         {
-            playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+           task.presionado=true;
+           
+           
         }
+
+        //gravity
+          playerVelocity.y += gravityValue * Time.deltaTime;
+        controller.Move(playerVelocity * Time.deltaTime);
 
         //sprint of the player
       
@@ -85,12 +108,8 @@ public class Player_controller : MonoBehaviour
         }
 
 
-        playerVelocity.y += gravityValue * Time.deltaTime;
-        controller.Move(playerVelocity * Time.deltaTime);
-       // if(movementInput != Vector2.zero){
-        //    Quaternion rotation = Quaternion.Euler(new Vector3(child.localEulerAngles.x, cameraMain.localEulerAngles.y , child.localEulerAngles.z));
-        //    child.rotation= Quaternion.Lerp(child.rotation, rotation, Time.deltaTime * rotationSpeed);
-     //   }
+      
+       
 
 
     //hide player
@@ -106,31 +125,41 @@ public class Player_controller : MonoBehaviour
        
     if (playerInput.PlayerMain.Hide1.triggered) {
         if (personajeVisible && rayoLazer.choca && !hide.esconder && !hide1Presionado) {
-            Debug.Log("Presionado1" );
+            
             hide.esconder = true;
             hide1Presionado = true;
             personajeVisible = false;
              controller.enabled = false;
         }
         else if (!personajeVisible && hide.esconder && hide1Presionado) {
-            Debug.Log("Presionado2");
+           
             hide.presionado = true;
             hide.esconder = false;
             hide1Presionado = false;
             personajeVisible = true;
-            controller.enabled = true;
+           
+          
         }
 
-      
     }
-  
-    
-    
-    
-
+    if(hide.salio){
+       StartCoroutine(finSalio());
+       hide.salio=false;
+    }
+   
    
 
+
     }
 
+    IEnumerator finSalio(){
+    yield return new WaitForSeconds(1.5f);
+    controller.enabled=true;
+    
+  }
+
+  bool IsTaskActive(){
+    return !GameObject.FindWithTag("Task");
+  }
     
 }

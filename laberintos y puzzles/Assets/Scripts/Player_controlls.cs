@@ -37,7 +37,7 @@ public partial class @Player_controlls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Jump"",
+                    ""name"": ""Interactuar"",
                     ""type"": ""Button"",
                     ""id"": ""ffd1f9c9-fa2c-45aa-85ca-64da8f95ce93"",
                     ""expectedControlType"": ""Button"",
@@ -147,7 +147,7 @@ public partial class @Player_controlls : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Jump"",
+                    ""action"": ""Interactuar"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -158,7 +158,7 @@ public partial class @Player_controlls : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Jump"",
+                    ""action"": ""Interactuar"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -225,7 +225,7 @@ public partial class @Player_controlls : IInputActionCollection2, IDisposable
         // PlayerMain
         m_PlayerMain = asset.FindActionMap("PlayerMain", throwIfNotFound: true);
         m_PlayerMain_Move = m_PlayerMain.FindAction("Move", throwIfNotFound: true);
-        m_PlayerMain_Jump = m_PlayerMain.FindAction("Jump", throwIfNotFound: true);
+        m_PlayerMain_Interactuar = m_PlayerMain.FindAction("Interactuar", throwIfNotFound: true);
         m_PlayerMain_Look = m_PlayerMain.FindAction("Look", throwIfNotFound: true);
         m_PlayerMain_Sprint = m_PlayerMain.FindAction("Sprint", throwIfNotFound: true);
         m_PlayerMain_Hide1 = m_PlayerMain.FindAction("Hide1", throwIfNotFound: true);
@@ -289,7 +289,7 @@ public partial class @Player_controlls : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerMain;
     private IPlayerMainActions m_PlayerMainActionsCallbackInterface;
     private readonly InputAction m_PlayerMain_Move;
-    private readonly InputAction m_PlayerMain_Jump;
+    private readonly InputAction m_PlayerMain_Interactuar;
     private readonly InputAction m_PlayerMain_Look;
     private readonly InputAction m_PlayerMain_Sprint;
     private readonly InputAction m_PlayerMain_Hide1;
@@ -298,7 +298,7 @@ public partial class @Player_controlls : IInputActionCollection2, IDisposable
         private @Player_controlls m_Wrapper;
         public PlayerMainActions(@Player_controlls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_PlayerMain_Move;
-        public InputAction @Jump => m_Wrapper.m_PlayerMain_Jump;
+        public InputAction @Interactuar => m_Wrapper.m_PlayerMain_Interactuar;
         public InputAction @Look => m_Wrapper.m_PlayerMain_Look;
         public InputAction @Sprint => m_Wrapper.m_PlayerMain_Sprint;
         public InputAction @Hide1 => m_Wrapper.m_PlayerMain_Hide1;
@@ -314,9 +314,9 @@ public partial class @Player_controlls : IInputActionCollection2, IDisposable
                 @Move.started -= m_Wrapper.m_PlayerMainActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_PlayerMainActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_PlayerMainActionsCallbackInterface.OnMove;
-                @Jump.started -= m_Wrapper.m_PlayerMainActionsCallbackInterface.OnJump;
-                @Jump.performed -= m_Wrapper.m_PlayerMainActionsCallbackInterface.OnJump;
-                @Jump.canceled -= m_Wrapper.m_PlayerMainActionsCallbackInterface.OnJump;
+                @Interactuar.started -= m_Wrapper.m_PlayerMainActionsCallbackInterface.OnInteractuar;
+                @Interactuar.performed -= m_Wrapper.m_PlayerMainActionsCallbackInterface.OnInteractuar;
+                @Interactuar.canceled -= m_Wrapper.m_PlayerMainActionsCallbackInterface.OnInteractuar;
                 @Look.started -= m_Wrapper.m_PlayerMainActionsCallbackInterface.OnLook;
                 @Look.performed -= m_Wrapper.m_PlayerMainActionsCallbackInterface.OnLook;
                 @Look.canceled -= m_Wrapper.m_PlayerMainActionsCallbackInterface.OnLook;
@@ -333,9 +333,9 @@ public partial class @Player_controlls : IInputActionCollection2, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
-                @Jump.started += instance.OnJump;
-                @Jump.performed += instance.OnJump;
-                @Jump.canceled += instance.OnJump;
+                @Interactuar.started += instance.OnInteractuar;
+                @Interactuar.performed += instance.OnInteractuar;
+                @Interactuar.canceled += instance.OnInteractuar;
                 @Look.started += instance.OnLook;
                 @Look.performed += instance.OnLook;
                 @Look.canceled += instance.OnLook;
@@ -352,7 +352,7 @@ public partial class @Player_controlls : IInputActionCollection2, IDisposable
     public interface IPlayerMainActions
     {
         void OnMove(InputAction.CallbackContext context);
-        void OnJump(InputAction.CallbackContext context);
+        void OnInteractuar(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnHide1(InputAction.CallbackContext context);
