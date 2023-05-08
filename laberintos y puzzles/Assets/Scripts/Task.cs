@@ -4,29 +4,45 @@ using UnityEngine;
 
 public class Task : MonoBehaviour
 {
-   public GameObject task;
+  
     private GameObject playerObj;
     private Rayo_lazer rayoLazer;
+
+     public GameObject taskPrefab;
+    private GameObject taskInstance;
+ 
    
-    public bool presionado;
+    public bool presionado=false;
      
     void Start()
     {
         playerObj = GameObject.Find("visor");
             
          rayoLazer = playerObj.GetComponent<Rayo_lazer>();
+   
+     taskInstance = Instantiate(taskPrefab);
+           taskInstance.SetActive(false);
+           Debug.Log("Lo instancie y lo desactive de la escnea");
          
     }
     void Update()
     {
+        
         if(rayoLazer.chocaPuzzle){
             if(presionado && isTaskActive()){//si le picaste y no hay una tarea ya activa
-            Instantiate(task);
-            presionado=false;
+                taskInstance.SetActive(true);
+                Debug.Log("Entro a activar el prefab");;           
+            }
+            if(!presionado){
+            taskInstance.SetActive(false);
+            Debug.Log("Entro a desactivar el prefab");
+        
             }
         }else{
             presionado=false;
         }
+
+
     }
 
 

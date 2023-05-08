@@ -9,8 +9,7 @@ public class Player_controller : MonoBehaviour
     private bool groundedPlayer;
     [SerializeField]
     private float playerSpeed = 2.0f;
-    [SerializeField]
-    private float jumpHeight = 1.0f;
+   
     [SerializeField]
     private float gravityValue = -9.81f;
    
@@ -20,13 +19,21 @@ public class Player_controller : MonoBehaviour
     private bool hide1Presionado = false;
     private bool personajeVisible = true;
 
-    private bool correr=false;
+    public bool correr=false;
+
+    public bool me_muevo;
 
 
     public Player_controlls playerInput;
 
     private GameObject playerObj3;
     private Task task;
+
+    private GameObject playerObj2;
+    private Hide hide;
+
+    private GameObject playerObj;
+    private Rayo_lazer rayoLazer;
     
     private void Awake()
     {
@@ -47,6 +54,12 @@ public class Player_controller : MonoBehaviour
 
         playerObj3=GameObject.Find("cofre");
         task=playerObj3.GetComponent<Task>();
+
+        playerObj2= GameObject.Find("BigCloset");  
+        hide= playerObj2.GetComponent<Hide>();
+        
+         playerObj = GameObject.Find("visor");      
+         rayoLazer = playerObj.GetComponent<Rayo_lazer>();
        
        
     }
@@ -82,14 +95,35 @@ public class Player_controller : MonoBehaviour
         controller.Move(moveDirection * Time.deltaTime * playerSpeed);
 
 
+        if (moveDirection.magnitude > 0f) {//condicional para saber si me muevo o no
+             // El personaje se está moviendo
+             me_muevo=true;
+             Debug.Log("Me muevo: ");
+        } else {
+                // El personaje no se está moviendo
+                me_muevo=false;
+                Debug.Log("No me muevo");
+            }
+
+
+
 
         // boton para interactuar..
         if (playerInput.PlayerMain.Interactuar.triggered)
         {
-           task.presionado=true;
+           //task.presionado=true;
+           if(task.presionado){
+            task.presionado=false;
+            Debug.Log("Falso");
+           }else{
+            task.presionado=true;
+            Debug.Log("true");
+           }
            
            
         }
+        
+        
 
         //gravity
           playerVelocity.y += gravityValue * Time.deltaTime;
@@ -99,7 +133,7 @@ public class Player_controller : MonoBehaviour
       
         if(playerInput.PlayerMain.Sprint.triggered){
             if(!correr){
-                playerSpeed=8f;
+                playerSpeed=6f;
                 correr=true;
             }else if(correr){
                 playerSpeed=2f;
@@ -114,13 +148,7 @@ public class Player_controller : MonoBehaviour
 
     //hide player
 
-        GameObject playerObj2= GameObject.Find("BigCloset");
-    
-        Hide hide= playerObj2.GetComponent<Hide>();
-        
-        GameObject playerObj = GameObject.Find("visor");
-            
-        Rayo_lazer rayoLazer = playerObj.GetComponent<Rayo_lazer>();
+       
 
        
     if (playerInput.PlayerMain.Hide1.triggered) {
@@ -158,8 +186,6 @@ public class Player_controller : MonoBehaviour
     
   }
 
-  bool IsTaskActive(){
-    return !GameObject.FindWithTag("Task");
-  }
+  
     
 }
