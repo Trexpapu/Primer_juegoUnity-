@@ -16,14 +16,18 @@ public class Player_controller : MonoBehaviour
     private Transform cameraMain;
     
 
+    //boleanos para hide
     private bool hide1Presionado = false;
     private bool personajeVisible = true;
 
+    //boleano para saber si corre o camina 
     public bool correr=false;
 
+    //booleano de referencia a sonido_controller
     public bool me_muevo;
 
-
+    //boleano para saber si me puedo mover o no
+    public bool puedoMoverme=true;
     public Player_controlls playerInput;
 
     private GameObject playerObj3;
@@ -81,6 +85,7 @@ public class Player_controller : MonoBehaviour
         moveDirection.Normalize();
 
         // Rotar el personaje hacia la dirección del movimiento
+        if(puedoMoverme){
         if (moveDirection != Vector3.zero) {
             gameObject.transform.forward = moveDirection;
 
@@ -91,9 +96,12 @@ public class Player_controller : MonoBehaviour
             }
         }
 
-        // Mover el personaje utilizando el CharacterController
-        controller.Move(moveDirection * Time.deltaTime * playerSpeed);
+        }
 
+        // Mover el personaje utilizando el CharacterController
+        if(puedoMoverme){
+        controller.Move(moveDirection * Time.deltaTime * playerSpeed);
+        }
 
         if (moveDirection.magnitude > 0f) {//condicional para saber si me muevo o no
              // El personaje se está moviendo
@@ -114,9 +122,11 @@ public class Player_controller : MonoBehaviour
            //task.presionado=true;
            if(task.presionado){
             task.presionado=false;
+            puedoMoverme=true;
             Debug.Log("Falso");
            }else{
-            task.presionado=true;
+            task.presionado=true; 
+            puedoMoverme=false; 
             Debug.Log("true");
            }
            

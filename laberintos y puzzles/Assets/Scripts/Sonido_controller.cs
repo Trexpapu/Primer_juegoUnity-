@@ -12,6 +12,8 @@ public class Sonido_controller : MonoBehaviour
     float maxDistancia;//aumentar la distancia donde se escucha el sonido
     float minDistancia;//disminuir la distancia donde se escucha el sonido
 
+    
+
     public AudioSource audioSource;
     private Player_controller controller;
 
@@ -26,7 +28,7 @@ public class Sonido_controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(controller.me_muevo){//si me muevo o no 
+        if(controller.me_muevo && controller.puedoMoverme){//si me muevo o no y ademas puedo moverme
         if(!audioSource.isPlaying){//si no hay sonido reproduciondo
         if(controller.correr==true){//si estoy corriendo
             sonidoAReproducir= sonidosDeCorrer[Random.Range(0, sonidosDeCorrer.Length)];//va a seleccionar un sonido random de mi arreglo de sonidos
